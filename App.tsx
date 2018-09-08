@@ -8,7 +8,7 @@ import Ionicons from './node_modules/@expo/vector-icons/fonts/Ionicons.ttf';
 // @ts-ignore
 import getTheme from './native-base-theme/components';
 import LoadingScreen from './src/screens/Loading';
-import Stack from './Routes';
+import OnBoardingNavigator from './Routes';
 
 const Roboto_medium = require('./assets/fonts/Roboto/Roboto-Medium.ttf');
 
@@ -32,7 +32,7 @@ export default class App extends React.Component<{}> {
 				<Root>
 					<StyleProvider style={getTheme()}>
 						<ActionSheetProvider>
-							<Stack />
+							<OnBoardingNavigator />
 						</ActionSheetProvider>
 					</StyleProvider>
 				</Root>

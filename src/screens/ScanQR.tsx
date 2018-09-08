@@ -31,7 +31,6 @@ export class ScanQR extends React.Component<ParentProps, State> {
 				backgroundColor: ThemeColors.blue,
 				borderBottomColor: ThemeColors.blue
 			},
-			headerRight: <Icon style={{ paddingRight: 10, color: ThemeColors.white }} name="flash" />,
 			title: 'ETH address QR',
 			headerTitleStyle: {
 				color: ThemeColors.white,

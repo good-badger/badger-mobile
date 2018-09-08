@@ -1,12 +1,14 @@
+import { Container } from 'native-base';
 import React from 'react';
-import { Dimensions, Text, View, ImageBackground } from 'react-native';
+import { AsyncStorage, Dimensions, ImageBackground, Text, View } from 'react-native';
+import { NavigationActions, StackActions } from 'react-navigation';
 import DarkButton from '../components/DarkButton';
 import LightButton from '../components/LightButton';
 import LogoView from '../components/LogoView';
+import { UserStorageKeys } from '../models/phoneStorage';
 import { ThemeColors } from '../styles/Colors';
 import ContainerStyles from '../styles/Containers';
 import OnBoardingStyles from '../styles/OnBoarding';
-import { Container } from 'native-base';
 
 const { height, width } = Dimensions.get('window');
 const qr = require('../../assets/qr.png');
@@ -19,6 +21,19 @@ interface ParentProps {
 }
 
 export default class OnBoarding extends React.Component<ParentProps> {
+	componentDidMount() {
+		AsyncStorage.getItem(UserStorageKeys.name, (error: any, name: string | undefined) => {
+			if (name) {
+				this.props.navigation.dispatch(
+					StackActions.reset({
+						index: 0,
+						actions: [NavigationActions.navigate({ routeName: 'Dashboard' })]
+					})
+				);
+			}
+		});
+	}
+
 	render() {
 		return (
 			<Container>

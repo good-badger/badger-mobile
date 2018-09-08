@@ -59,11 +59,11 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 		}
 	}
 
-	navigateToLogin() {
+	navigateToDashBoard() {
 		this.props.navigation.dispatch(
 			StackActions.reset({
 				index: 0,
-				actions: [NavigationActions.navigate({ routeName: 'Login' })]
+				actions: [NavigationActions.navigate({ routeName: 'Dashboard' })]
 			})
 		);
 	}
@@ -71,6 +71,9 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 	handleCreateUser() {
 		if (this.state.name && this.state.email && this.state.ethAddress) {
 			AsyncStorage.setItem(UserStorageKeys.name, this.state.name);
+			AsyncStorage.setItem(UserStorageKeys.email, this.state.email);
+			AsyncStorage.setItem(UserStorageKeys.ethAddress, this.state.ethAddress);
+			this.navigateToDashBoard();
 		} else {
 			showToast('All fields are required!', toastType.DANGER);
 		}

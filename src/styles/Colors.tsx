@@ -18,16 +18,14 @@ const ButtonDark = {
 	colorSecondary: '#036C93'
 };
 
+const ResetBox = {
+	colorPrimary: '#002D42',
+	colorSecondary: '#001E2D'
+};
+
 const ClaimsButton = {
 	colorPrimary: '#012639',
 	colorSecondary: '#002D42'
 };
 
-const ProjectStatus = {
-	notStarted: '#ff4b4b',
-	inProgress: '#FFA81E',
-	complete: '#008000'
-};
-
-export { ThemeColors, ProjectStatus, ButtonDark, ClaimsButton };
-
+export { ThemeColors, ButtonDark, ResetBox, ClaimsButton };
