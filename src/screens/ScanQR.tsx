@@ -129,9 +129,9 @@ export class ScanQR extends React.Component<ParentProps, State> {
 		if (hasCameraPermission === null) {
 			return <View />;
 		} else if (hasCameraPermission === false) {
-			return <Text>No access to camera</Text>;
+			return <View><Text>No access to camera</Text></View>;
 		} else if (loading === true) {
-			return <Text>Loading...</Text>;
+			return <View><Text>Loading...</Text></View>;
 		} else {
 			return (
 				<View style={{ flex: 1 }}>
