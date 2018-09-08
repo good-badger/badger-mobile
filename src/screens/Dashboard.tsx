@@ -69,7 +69,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 		const svgGen = new SVGGenerator();
 
 		console.log('IMG: ' + svgGen.generateImgStringForSDG(1));
-		this.setState({ badgeImg: svgGen.generateImgStringForSDG(2) });
+		this.setState({ badgeImg: svgGen.generateImgStringForSDG(1) });
 	}
 
 	openDrawer = () => {
@@ -95,7 +95,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				onClose={() => this.closeDrawer()}
 			>
 				<ImageBackground source={background} style={[DashboardStyles.wrapper]}>
-					{this.state.badgeImg !== '' && <SvgUri width="400" height="400" source={{ uri: this.state.badgeImg }} />}
+					{this.state.badgeImg !== '' && <SvgUri width="400" height="300" source={{ uri: this.state.badgeImg }} />}
 				</ImageBackground>
 				<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
 			</Drawer>
