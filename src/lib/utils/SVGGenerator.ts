@@ -48,23 +48,35 @@ export class SVGGenerator {
 	sdg(sdgNode: string) {
 		return `<g fill='white' x='310' y='-100'>${sdgNode}</g>`;
 	}
-	generateSVG(theNum: number) {
+	generateSVG(theNum: number, lvl: number) {
+		// ${this.star(1, true)}
+		// ${this.star(2, this.starQualifies(2,lvl))}
+		// ${this.star(3, this.starQualifies(3,lvl))}
+
 		return `<svg data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'>
 		<title>${data.sdgs[theNum].title}</title>
 			${data.styles}
 			${this.baseCircle(data.sdgs[theNum].color)}
-			${this.innerRing(data.sdgs[theNum].color)}
-			${this.outerRing(data.sdgs[theNum].color)}
-			${this.branches()}
+			${this.qualifies(2,lvl) && this.innerRing(data.sdgs[theNum].color)}
+			${this.qualifies(2,lvl) && this.outerRing(data.sdgs[theNum].color)}
+			${this.qualifies(3,lvl) && this.branches()}
 			${this.sdg(data.sdgs[theNum].node)}
 			${this.star(1, true)}
-			${this.star(2, true)}
-			${this.star(3, true)}
+			${this.star(2, this.qualifies(2,lvl))}
+			${this.star(3, this.qualifies(3,lvl))}
 		</svg>`;
 	}
 
-	generateImgStringForSDG(sdgNum: number) {
-		var encodedData = Buffer.from(this.generateSVG(sdgNum - 1)).toString('base64');
+	qualifies(required:number, lvl: number) {
+		if(lvl >= required) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	generateImgStringForSDG(sdgNum: number, lvl: number) {
+		var encodedData = Buffer.from(this.generateSVG(sdgNum - 1, lvl)).toString('base64');
 		return 'data:image/svg+xml;base64,' + encodedData;
 	}
 }
