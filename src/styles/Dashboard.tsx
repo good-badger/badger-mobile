@@ -9,11 +9,17 @@ interface Style {
 
 const styles = StyleSheet.create<Style>({
 	wrapper: {
-		flex: 1,
 		width: '100%',
 		height: '100%',
 		paddingHorizontal: 10,
-		backgroundColor: ThemeColors.blue_dark
+		backgroundColor: ThemeColors.blue_dark,
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		flexWrap: 'wrap',
+		flexDirection: 'row'
+	},
+	badgeItem: {
+		width: '50%'
 	},
 	button: {
 		width: '100%',

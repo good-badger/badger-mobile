@@ -3,26 +3,10 @@ import React from 'react';
 import DarkButton from '../components/DarkButton';
 import SideBar from '../components/SideBar';
 import { ThemeColors } from '../styles/Colors';
-import { ImageBackground, Image } from 'react-native';
+import { ImageBackground, ScrollView } from 'react-native';
 import DashboardStyles from '../styles/Dashboard';
 import { SVGGenerator } from '../lib/utils/SVGGenerator';
-import Svg,{
-    Circle,
-    Ellipse,
-    G,
-    LinearGradient,
-    RadialGradient,
-    Line,
-    Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Text,
-    Use,
-    Defs,
-    Stop
-} from 'react-native-svg';
+
 import SvgUri from 'react-native-svg-uri';
 interface ParentProps {
 	navigation: any;
@@ -30,7 +14,7 @@ interface ParentProps {
 
 export interface StateProps {
 	isDrawerOpen: boolean;
-	badgeImg: string;
+	badges: string[];
 }
 
 const qr = require('../../assets/qr.png');
@@ -56,7 +40,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 	};
 
 	state = {
-		badgeImg: '',
+		badges: [],
 		isDrawerOpen: false
 	};
 
@@ -67,8 +51,13 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 		});
 
 		const svgGen = new SVGGenerator();
+		let badgeArray = [{sdg: 1, lvl: 2}, {sdg: 12, lvl: 1}, {sdg: 16, lvl: 3}, {sdg: 4, lvl: 2}, {sdg: 7, lvl: 1}];
+		let badgeImages = [];
 
-		this.setState({ badgeImg: svgGen.generateImgStringForSDG(7, 1) });
+		for (var i in badgeArray) {
+			badgeImages.push(svgGen.generateImgStringForSDG(badgeArray[i].sdg, badgeArray[i].lvl));
+		 }
+		this.setState({ badges: badgeImages});
 	}
 
 	openDrawer = () => {
@@ -93,9 +82,17 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				content={<SideBar navigation={this.props.navigation} />}
 				onClose={() => this.closeDrawer()}
 			>
-				<ImageBackground source={background} style={[DashboardStyles.wrapper]}>
-					{this.state.badgeImg !== '' && <SvgUri width="400" height="300" source={{ uri: this.state.badgeImg }} />}
-				</ImageBackground>
+			<ImageBackground source={background} style={{height: '100%'}}>
+				<ScrollView  contentContainerStyle={[DashboardStyles.wrapper]}>
+					{this.state.badges.map((el, idx) => {
+						return (
+							<View style={[DashboardStyles.badgeItem]} key={idx}>
+								<SvgUri width="200" height="200" source={{ uri: el }} />
+							</View>
+						);
+					})}
+				</ScrollView>
+			</ImageBackground>
 				<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
 			</Drawer>
 		);

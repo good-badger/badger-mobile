@@ -46,12 +46,9 @@ export class SVGGenerator {
 	}
 
 	sdg(sdgNode: string) {
-		return `<g fill='white' x='310' y='-100'>${sdgNode}</g>`;
+		return `<g fill='white' x='310' y='-120'>${sdgNode}</g>`;
 	}
 	generateSVG(theNum: number, lvl: number) {
-		// ${this.star(1, true)}
-		// ${this.star(2, this.starQualifies(2,lvl))}
-		// ${this.star(3, this.starQualifies(3,lvl))}
 
 		return `<svg data-name='Layer 1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'>
 		<title>${data.sdgs[theNum].title}</title>
