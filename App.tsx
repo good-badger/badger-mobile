@@ -1,3 +1,5 @@
+import './global';
+import './shim.js';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Font, ScreenOrientation } from 'expo';
@@ -11,6 +13,7 @@ import LoadingScreen from './src/screens/Loading';
 import OnBoardingNavigator from './Routes';
 
 const Roboto_medium = require('./assets/fonts/Roboto/Roboto-Medium.ttf');
+const Web3 = require('web3');
 
 export default class App extends React.Component<{}> {
 	state = {
@@ -18,6 +21,8 @@ export default class App extends React.Component<{}> {
 	};
 
 	async componentDidMount() {
+		const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/'));
+
 		ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT);
 		await Font.loadAsync({
 			Ionicons,
