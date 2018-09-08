@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import OnBoarding from './src/screens/Onboarding';
 import { ScanQR } from './src/screens/ScanQR';
+import { CaptureDetails } from './src/screens/CaptureDetails';
 
 const Stack = createStackNavigator(
 	{
@@ -13,6 +14,9 @@ const Stack = createStackNavigator(
 		},
 		ScanQR: {
 			screen: ScanQR
+		},
+		CaptureDetails: {
+			screen: CaptureDetails
 		}
 	},
 

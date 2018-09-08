@@ -23,7 +23,7 @@ const styles = StyleSheet.create<Style>({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
-		flexDirection: 'column'
+		flexDirection: 'column',
 	},
 	backgroundColorDark: {
 		backgroundColor: ThemeColors.blue

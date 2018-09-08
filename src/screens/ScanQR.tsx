@@ -1,12 +1,12 @@
 import { Camera, Permissions } from 'expo';
 import { Icon, Text, View } from 'native-base';
 import React from 'react';
-import { Dimensions, Image, KeyboardAvoidingView, Modal, StatusBar } from 'react-native';
-import { NavigationActions, StackActions } from 'react-navigation';
+import { Dimensions, KeyboardAvoidingView, Modal, StatusBar } from 'react-native';
+import LightButton from '../components/LightButton';
+import LogoView from '../components/LogoView';
 import { ThemeColors } from '../styles/Colors';
 import ModalStyle from '../styles/Modal';
-import LogoView from '../components/LogoView';
-import LightButton from '../components/LightButton';
+import { showToast, toastType } from '../lib/utils/toast';
 
 const { height, width } = Dimensions.get('window');
 
@@ -58,7 +58,9 @@ export class ScanQR extends React.Component<ParentProps, State> {
 	}
 
 	_handleBarCodeRead = (payload: any) => {
-		if (!this.state.modalVisible) {
+		if (!payload.data.includes('ethereum')) {
+			showToast('Only Ethereum addresses work', toastType.DANGER);
+		} else {
 			this.setState({ modalVisible: true, payload: payload.data.replace('ethereum:', '') });
 		}
 	};
@@ -67,7 +69,12 @@ export class ScanQR extends React.Component<ParentProps, State> {
 		this.setState({ modalVisible: false, payload: null, errors: false });
 	};
 
-	navigateToRegister = () => {};
+	navigateToDetails = () => {
+		this.setState({ modalVisible: false });
+		this.props.navigation.navigate('CaptureDetails', {
+			ethAddress: this.state.payload
+		});
+	};
 
 	setModalVisible(visible: boolean) {
 		this.setState({ modalVisible: visible });
@@ -89,8 +96,8 @@ export class ScanQR extends React.Component<ParentProps, State> {
 						</View>
 						<View style={ModalStyle.divider} />
 						<Text style={{ color: ThemeColors.white, fontSize: 18 }}>{this.state.payload}</Text>
-						<LightButton onPress={() => this.navigateToRegister()} text={'CONTINUE'} />
-						<LightButton onPress={() => this.handleResetScan()} text={'RE-SCAN'} />
+						<LightButton propStyles={[ModalStyle.button]} onPress={() => this.navigateToDetails()} text={'CONTINUE'} />
+						<LightButton propStyles={[ModalStyle.button]} onPress={() => this.handleResetScan()} text={'RE-SCAN'} />
 					</View>
 				</View>
 			</KeyboardAvoidingView>

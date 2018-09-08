@@ -8,6 +8,7 @@ interface Style {
 	flexRight: ViewStyle;
 	flexLeft: ViewStyle;
 	divider: ViewStyle;
+	button: ViewStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -37,6 +38,11 @@ const styles = StyleSheet.create<Style>({
 		width: '70%',
 		height: 1,
 		backgroundColor: ThemeColors.blue_medium
+	},
+	button: {
+		width: '100%',
+		justifyContent: 'center',
+		marginTop: 20
 	}
 });
 

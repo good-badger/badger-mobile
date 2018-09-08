@@ -4,54 +4,28 @@ import { ThemeColors } from './Colors';
 const { height, width } = Dimensions.get('window');
 interface Style {
 	wrapper: ViewStyle;
-	slide: ViewStyle;
 	logo: ViewStyle;
-	textBox: ViewStyle;
-	textBoxButtonContainer: ViewStyle;
-	buttons: ViewStyle;
-	infoBlockImage: ViewStyle;
-	infoBlock: ViewStyle;
+	button: ViewStyle;
 }
 
 const styles = StyleSheet.create<Style>({
 	wrapper: {
-		flex: 1
-	},
-	slide: {
 		flex: 1,
+		backgroundColor: ThemeColors.blue_dark,
 		justifyContent: 'center',
-		alignItems: 'center'
+		display: 'flex',
+		paddingBottom: 20
 	},
 	logo: {
 		width: width * 0.9,
 		height: height * 0.2,
 		backgroundColor: 'transparent'
 	},
-	textBox: {
-		paddingBottom: 33,
-		paddingLeft: 60,
-		paddingRight: 60
-	},
-	textBoxButtonContainer: {
-		flex: 1.5,
-		//justifyContent: 'flex-start',
-		alignItems: 'center',
-		flexDirection: 'column'
-	},
-	buttons: {
-		//width: '100%',
+	button: {
+		width: '80%',
+		alignSelf: 'center',
 		justifyContent: 'center',
-		width: width * 0.8
-	},
-	infoBlockImage: {
-		width: width * 0.08,
-		height: width * 0.08
-	},
-	infoBlock: {
-		borderWidth: 1,
-		borderColor: ThemeColors.blue_light,
-		justifyContent: 'center',
-		height: height * 0.1
+		margin: 13
 	}
 });
 
