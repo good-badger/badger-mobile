@@ -1,12 +1,13 @@
 import { Camera, Permissions } from 'expo';
 import { Icon, Text, View } from 'native-base';
 import React from 'react';
-import { Dimensions, KeyboardAvoidingView, Modal, StatusBar } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Modal, StatusBar, AsyncStorage } from 'react-native';
 import LightButton from '../components/LightButton';
 import LogoView from '../components/LogoView';
 import { ThemeColors } from '../styles/Colors';
 import ModalStyle from '../styles/Modal';
 import { showToast, toastType } from '../lib/utils/toast';
+import { UserStorageKeys } from '../models/phoneStorage';
 
 const { height, width } = Dimensions.get('window');
 
@@ -22,6 +23,8 @@ interface State {
 	modalVisible: boolean;
 	payload: string | null;
 	errors: boolean;
+	name: string;
+	ethAddress: string;
 }
 
 export class ScanQR extends React.Component<ParentProps, State> {
@@ -48,16 +51,34 @@ export class ScanQR extends React.Component<ParentProps, State> {
 		loading: false,
 		modalVisible: false,
 		payload: null,
-		errors: false
+		errors: false,
+		name: '',
+		ethAddress: ''
 	};
 
 	async componentWillMount() {
 		const { status } = await Permissions.askAsync(Permissions.CAMERA);
 		this.setState({ hasCameraPermission: status === 'granted' });
+		this.retrieveUserFromStorage();
+	}
+
+	async retrieveUserFromStorage() {
+		try {
+			const name = await AsyncStorage.getItem(UserStorageKeys.name);
+			const ethAddress = await AsyncStorage.getItem(UserStorageKeys.ethAddress);
+			this.setState({ name, ethAddress });
+		} catch (error) {
+			console.error(error);
+		}
 	}
 
 	_handleBarCodeRead = (payload: any) => {
-		if (!payload.data.includes('ethereum')) {
+		console.log('Payload data: ' + payload.data);
+		if (payload.data.includes('callback')) {
+			var callback = payload.data.substring(0, payload.data.indexOf('?'));
+			fetch(callback + '?wallet=' + this.state.ethAddress + '&name=' + this.state.name);
+			console.log(callback + '?wallet=' + this.state.ethAddress + '&name=' + this.state.name);
+		} else if (!payload.data.includes('ethereum')) {
 			showToast('Only Ethereum addresses work', toastType.DANGER);
 		} else {
 			this.setState({ modalVisible: true, payload: payload.data.replace('ethereum:', '') });
