@@ -8,11 +8,14 @@ interface Style {
 }
 
 const styles = StyleSheet.create<Style>({
+	backgroundWrapper: {
+		backgroundColor: ThemeColors.blue_dark,
+		height: '100%'
+	},
 	wrapper: {
 		width: '100%',
 		height: '100%',
 		paddingHorizontal: 10,
-		backgroundColor: ThemeColors.blue_dark,
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 		flexWrap: 'wrap',

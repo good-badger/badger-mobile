@@ -82,7 +82,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				content={<SideBar navigation={this.props.navigation} />}
 				onClose={() => this.closeDrawer()}
 			>
-			<ImageBackground source={background} style={{height: '100%'}}>
+			<ImageBackground source={background} style={[DashboardStyles.backgroundWrapper]}>
 				<ScrollView  contentContainerStyle={[DashboardStyles.wrapper]}>
 					{this.state.badges.map((el, idx) => {
 						return (
