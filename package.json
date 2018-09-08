@@ -7,8 +7,8 @@
 		"@types/jest": "^22.2.3",
 		"@types/react": "^16.3.14",
 		"@types/react-native": "^0.55.14",
-		"@types/react-test-renderer": "^16.0.1",
 		"@types/react-navigation": "^2.0.6",
+		"@types/react-test-renderer": "^16.0.1",
 		"jest-expo": "^29.0.0",
 		"react-native-scripts-ts": "1.15.0",
 		"react-native-typescript-transformer": "^1.2.3",
@@ -50,10 +50,13 @@
 	},
 	"dependencies": {
 		"@expo/react-native-action-sheet": "^1.0.2",
+		"buffer": "^5.2.1",
 		"expo": "^29.0.0",
 		"native-base": "^2.8.0",
 		"react": "16.3.1",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
+		"react-native-svg": "^6.5.2",
+		"react-native-svg-uri": "^1.2.3",
 		"react-navigation": "^2.9.3"
 	}
 }

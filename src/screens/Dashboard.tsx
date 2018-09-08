@@ -1,17 +1,36 @@
-import { Drawer, Icon } from 'native-base';
+import { Drawer, Icon, View } from 'native-base';
 import React from 'react';
 import DarkButton from '../components/DarkButton';
 import SideBar from '../components/SideBar';
 import { ThemeColors } from '../styles/Colors';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, Image } from 'react-native';
 import DashboardStyles from '../styles/Dashboard';
-
+import { SVGGenerator } from '../lib/utils/SVGGenerator';
+import Svg,{
+    Circle,
+    Ellipse,
+    G,
+    LinearGradient,
+    RadialGradient,
+    Line,
+    Path,
+    Polygon,
+    Polyline,
+    Rect,
+    Symbol,
+    Text,
+    Use,
+    Defs,
+    Stop
+} from 'react-native-svg';
+import SvgUri from 'react-native-svg-uri';
 interface ParentProps {
 	navigation: any;
 }
 
 export interface StateProps {
 	isDrawerOpen: boolean;
+	badgeImg: string;
 }
 
 const qr = require('../../assets/qr.png');
@@ -35,11 +54,22 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 			headerLeft: <Icon name="menu" onPress={() => params.openDrawer()} style={{ paddingLeft: 10, color: ThemeColors.white }} />
 		};
 	};
+
+	state = {
+		badgeImg: '',
+		isDrawerOpen: false
+	};
+
 	componentDidMount() {
 		this.props.navigation.setParams({
 			// @ts-ignore
 			openDrawer: this.openDrawer
 		});
+
+		const svgGen = new SVGGenerator();
+
+		console.log('IMG: ' + svgGen.generateImgStringForSDG(1));
+		this.setState({ badgeImg: svgGen.generateImgStringForSDG(2) });
 	}
 
 	openDrawer = () => {
@@ -65,7 +95,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				onClose={() => this.closeDrawer()}
 			>
 				<ImageBackground source={background} style={[DashboardStyles.wrapper]}>
-				
+					{this.state.badgeImg !== '' && <SvgUri width="400" height="400" source={{ uri: this.state.badgeImg }} />}
 				</ImageBackground>
 				<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
 			</Drawer>
