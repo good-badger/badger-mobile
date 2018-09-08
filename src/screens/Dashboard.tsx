@@ -68,8 +68,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 
 		const svgGen = new SVGGenerator();
 
-		console.log('IMG: ' + svgGen.generateImgStringForSDG(1));
-		this.setState({ badgeImg: svgGen.generateImgStringForSDG(1) });
+		this.setState({ badgeImg: svgGen.generateImgStringForSDG(7) });
 	}
 
 	openDrawer = () => {

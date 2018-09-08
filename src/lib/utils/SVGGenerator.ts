@@ -4,7 +4,7 @@ const data = require('../../../assets/svgs/svgs.json');
 
 export class SVGGenerator {
 	star(numStar: number, isFull: boolean) {
-		const positions = [{x:450, y:480}, { x:590, y:480}, { x:730, y:480}];
+		const positions = [{x:450, y:520}, { x:590, y:520}, { x:730, y:520}];
 		const theColor = [{fill: 'gold', stroke: '#c39335'}, {fill: 'silver', stroke: 'grey'}];
 		let boolNum: number = 0;
 		if(isFull === false) {
@@ -22,7 +22,7 @@ export class SVGGenerator {
 	}
 
 	outerRing(color: string) {
-		return `<circle fill='none' class='cls-4' id='e1_circle' strokeWidth='40' cx='810' cy='550' r='520' stroke='${color}'/>`;
+		return `<circle fill='none' id='e1_circle' strokeWidth='40' cx='810' cy='550' r='520' stroke='${color}'/>`;
 	}
 
 	branches() {
