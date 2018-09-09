@@ -35,8 +35,7 @@ const styles = StyleSheet.create<Style>({
 		flexDirection: 'row'
 	},
 	badgeItem: {
-		width: '50%',
-		height: '50%'
+		width: '50%'
 	},
 	button: {
 		width: '100%',
