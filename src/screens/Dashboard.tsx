@@ -11,6 +11,7 @@ import { SVGGenerator } from '../lib/utils/SVGGenerator';
 import { UserStorageKeys } from '../models/phoneStorage';
 
 import SvgUri from 'react-native-svg-uri';
+import { showToast, toastType } from '../lib/utils/toast';
 interface ParentProps {
 	navigation: any;
 }
@@ -22,7 +23,7 @@ export interface StateProps {
 
 const qr = require('../../assets/qr.png');
 const background = require('../../assets/backgrounds/background_1.png');
-
+const svgGen = new SVGGenerator();
 class Dashboard extends React.Component<ParentProps, StateProps> {
 	static navigationOptions = ({ navigation }: { navigation: any }) => {
 		const { params = {} } = navigation.state;
@@ -49,18 +50,13 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 	};
 
 	componentDidMount() {
+		this.getBadges();
+	}
+
+	getBadges = () => {
 		AsyncStorage.getItem(UserStorageKeys.ethAddress, (error: any, ethAddress: string | undefined) => {
 			if (ethAddress) {
-				console.log('eth address is: ', ethAddress);
-				// this.props.navigation.dispatch(
-				// 	StackActions.reset({
-				// 		index: 0,
-				// 		actions: [NavigationActions.navigate({ routeName: 'Dashboard' })]
-				// 	})
-				// );
 				let badgeImages: string[] = [];
-				const svgGen = new SVGGenerator();
-
 				fetch(`http://54.229.220.54:3000/api/badges?wallet=${ethAddress}`)
 					.then(response => {
 						return response.json();
@@ -72,6 +68,8 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 							badgeImages.push(imageStr);
 						}
 						this.setState({ badges: badgeImages });
+					}).catch((error) => {
+						showToast('invalid ethereum address', toastType.DANGER);
 					});
 				this.props.navigation.setParams({
 					// @ts-ignore
@@ -81,6 +79,31 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				console.log('no eth address found');
 			}
 		});
+	}
+
+	renderBadges = () => {
+		if (this.state.badges.length === 0) {
+			return (
+				<View style={{justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+					<Text style={{color: 'white'}}>
+						You currently do not have any badges. 
+					</Text>
+				</View>
+			);
+		}
+		return this.state.badges.map((el, idx) => {
+			return (
+				<TouchableOpacity
+					style={[DashboardStyles.badgeItem]}
+					key={idx}
+					onPress={() => {
+						this.getBadgeDetails(idx);
+					}}
+				>
+					<SvgUri width="200" height="200" source={{ uri: el }} />
+				</TouchableOpacity>
+			);
+		})
 	}
 
 	decodeBadgeArtwork = (artwork: string) => {
@@ -121,19 +144,7 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 			>
 				<ImageBackground source={background} style={[DashboardStyles.backgroundWrapper]}>
 					<ScrollView contentContainerStyle={[DashboardStyles.wrapper]}>
-						{this.state.badges.map((el, idx) => {
-							return (
-								<TouchableOpacity
-									style={[DashboardStyles.badgeItem]}
-									key={idx}
-									onPress={() => {
-										this.getBadgeDetails(idx);
-									}}
-								>
-									<SvgUri width="200" height="200" source={{ uri: el }} />
-								</TouchableOpacity>
-							);
-						})}
+						{this.renderBadges()}
 					</ScrollView>
 					<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
 				</ImageBackground>

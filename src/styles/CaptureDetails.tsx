@@ -7,6 +7,7 @@ interface Style {
 	flexLeft: ViewStyle;
 	header: TextStyle;
 	divider: ViewStyle;
+	input: TextStyle;
 }
 
 const styles = StyleSheet.create<Style>({
@@ -39,6 +40,11 @@ const styles = StyleSheet.create<Style>({
 		height: 1,
 		backgroundColor: ThemeColors.blue_medium,
 		marginBottom: 15
+	},
+	input: {
+		height: 40,
+		color: ThemeColors.blue_lightest,
+		margin: 2
 	}
 });
 

@@ -86,19 +86,22 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 						<View style={CaptureDetailsStyles.divider} />
 						<TextInput
 							value={this.state.name}
-							style={{ height: 40, color: 'white' }}
+							style={[CaptureDetailsStyles.input]}
+							placeholderTextColor='white'
 							placeholder="name"
 							onChangeText={text => this.setState({ name: text })}
 						/>
 						<TextInput
 							value={this.state.email}
-							style={{ height: 40, color: 'white' }}
+							style={[CaptureDetailsStyles.input]}
+							placeholderTextColor='white'
 							placeholder="email"
 							onChangeText={text => this.setState({ email: text })}
 						/>
 						<TextInput
 							value={this.state.ethAddress}
-							style={{ height: 40, color: 'white' }}
+							style={[CaptureDetailsStyles.input]}
+							placeholderTextColor='white'
 							placeholder="ethAddress"
 							onChangeText={text => this.setState({ ethAddress: text })}
 						/>
