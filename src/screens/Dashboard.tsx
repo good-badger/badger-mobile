@@ -14,7 +14,6 @@ import SvgUri from 'react-native-svg-uri';
 interface ParentProps {
 	navigation: any;
 }
-
 export interface StateProps {
 	isDrawerOpen: boolean;
 	badges: string[];
@@ -61,18 +60,19 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				// );
 				let badgeImages: string[] = [];
 				const svgGen = new SVGGenerator();
-		
-				fetch(`http://54.229.220.54:3000/api/badges?wallet=${ethAddress}`).then((response) => {
-					return response.json();
-				  })
-				  .then((badgesRes) => {
-					for (var i in badgesRes) {
-						const artDetail = this.decodeBadgeArtwork(badgesRes[i].artwork);
-						const imageStr = svgGen.generateImgStringForSDG(Number(artDetail[0]), Number(artDetail[1]));
-						badgeImages.push(imageStr);
-					 }
-					this.setState({ badges: badgeImages});
-				  });
+
+				fetch(`http://54.229.220.54:3000/api/badges?wallet=${ethAddress}`)
+					.then(response => {
+						return response.json();
+					})
+					.then(badgesRes => {
+						for (var i in badgesRes) {
+							const artDetail = this.decodeBadgeArtwork(badgesRes[i].artwork);
+							const imageStr = svgGen.generateImgStringForSDG(Number(artDetail[0]), Number(artDetail[1]));
+							badgeImages.push(imageStr);
+						}
+						this.setState({ badges: badgeImages });
+					});
 				this.props.navigation.setParams({
 					// @ts-ignore
 					openDrawer: this.openDrawer
@@ -85,9 +85,9 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 
 	decodeBadgeArtwork = (artwork: string) => {
 		const sdg = artwork.slice(0, 2);
-		const lvl = artwork.slice(2,3);
+		const lvl = artwork.slice(2, 3);
 		return [sdg, lvl];
-	}
+	};
 
 	openDrawer = () => {
 		// @ts-ignore
@@ -102,12 +102,12 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 	};
 
 	setModalVisible(visible: boolean) {
-		this.setState({modalVisible: visible});
+		this.setState({ modalVisible: visible });
 	}
 
 	getBadgeDetails = (badgeIndex: number) => {
 		this.setModalVisible(true);
-	}
+	};
 
 	render() {
 		return (
@@ -119,36 +119,40 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				content={<SideBar navigation={this.props.navigation} />}
 				onClose={() => this.closeDrawer()}
 			>
-			<ImageBackground source={background} style={[DashboardStyles.backgroundWrapper]}>
-				<ScrollView  contentContainerStyle={[DashboardStyles.wrapper]}>
-					{this.state.badges.map((el, idx) => {
-						return (
-							<TouchableOpacity style={[DashboardStyles.badgeItem]} key={idx} onPress={() => {this.getBadgeDetails(idx);}}>
-								<SvgUri width="200" height="200" source={{ uri: el }} />
-							</TouchableOpacity>
-						);
-					})}
-				</ScrollView>
-			</ImageBackground>
-			<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
-			<View style={[DashboardStyles.modalContainer]}>
-				<Modal
-				isVisible={this.state.modalVisible}
-				style={[DashboardStyles.modalWrapper]}
-				>
-					<View style={[DashboardStyles.modalContent]}>
-						<View>
-						<Text>Hello World!</Text>
+				<ImageBackground source={background} style={[DashboardStyles.backgroundWrapper]}>
+					<ScrollView contentContainerStyle={[DashboardStyles.wrapper]}>
+						{this.state.badges.map((el, idx) => {
+							return (
+								<TouchableOpacity
+									style={[DashboardStyles.badgeItem]}
+									key={idx}
+									onPress={() => {
+										this.getBadgeDetails(idx);
+									}}
+								>
+									<SvgUri width="200" height="200" source={{ uri: el }} />
+								</TouchableOpacity>
+							);
+						})}
+					</ScrollView>
+				</ImageBackground>
+				<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
+				<View style={[DashboardStyles.modalContainer]}>
+					<Modal isVisible={this.state.modalVisible} style={[DashboardStyles.modalWrapper]}>
+						<View style={[DashboardStyles.modalContent]}>
+							<View>
+								<Text>Hello World!</Text>
 
-						<TouchableHighlight
-							onPress={() => {
-							this.setModalVisible(!this.state.modalVisible);
-							}}>
-							<Text style={[DashboardStyles.button]}>Close</Text>
-						</TouchableHighlight>
+								<TouchableHighlight
+									onPress={() => {
+										this.setModalVisible(!this.state.modalVisible);
+									}}
+								>
+									<Text style={[DashboardStyles.button]}>Close</Text>
+								</TouchableHighlight>
+							</View>
 						</View>
-					</View>
-				</Modal>
+					</Modal>
 				</View>
 			</Drawer>
 		);

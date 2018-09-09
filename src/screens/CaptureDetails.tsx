@@ -7,15 +7,9 @@ import InputField from '../components/InputField';
 import { ThemeColors } from '../styles/Colors';
 import CaptureDetailsStyles from '../styles/CaptureDetails';
 import { UserStorageKeys } from '../models/phoneStorage';
-import { showToast } from '../lib/utils/toast';
+import { showToast, toastType } from '../lib/utils/toast';
 
 const background = require('../../assets/backgrounds/background_1.png');
-
-enum toastType {
-	SUCCESS = 'success',
-	WARNING = 'warning',
-	DANGER = 'danger'
-}
 
 interface ParentProps {
 	navigation: any;
@@ -84,7 +78,7 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 			<Container>
 				<StatusBar barStyle="light-content" />
 				<ImageBackground source={background} style={[CaptureDetailsStyles.wrapper]}>
-				<View style={{ height: Dimensions.get('window').height * 0.1 }} />
+					<View style={{ height: Dimensions.get('window').height * 0.1 }} />
 					<KeyboardAvoidingView behavior={'position'}>
 						<View style={[CaptureDetailsStyles.flexLeft]}>
 							<Text style={[CaptureDetailsStyles.header]}>Capture your details</Text>
