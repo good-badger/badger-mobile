@@ -1,6 +1,9 @@
 {
   "expo": {
+    "name": "Badger",
+    "icon": "./assets/logo.png",
     "sdkVersion": "29.0.0",
+    "version": "1.0.0",
     "packagerOpts": {
       "sourceExts": ["ts", "tsx"],
       "transformer": "node_modules/react-native-typescript-transformer/index.js"
