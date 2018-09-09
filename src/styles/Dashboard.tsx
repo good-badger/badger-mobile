@@ -10,9 +10,17 @@ interface Style {
 	badgeItem: ViewStyle;
 	modalContainer: ViewStyle;
 	modalContent: ViewStyle;
+	scroller: ViewStyle;
 }
 
 const styles = StyleSheet.create<Style>({
+	empty: {
+		width: '100%',
+		height: '100%',
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: '50%'
+	},
 	modalContainer: {
 		flex: 1,
 		justifyContent: 'center',
@@ -28,7 +36,6 @@ const styles = StyleSheet.create<Style>({
 	},
 	wrapper: {
 		width: '100%',
-		height: '100%',
 		paddingHorizontal: 10,
 		justifyContent: 'flex-start',
 		flexWrap: 'wrap',

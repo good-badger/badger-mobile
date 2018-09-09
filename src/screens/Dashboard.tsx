@@ -4,7 +4,7 @@ import DarkButton from '../components/DarkButton';
 import SideBar from '../components/SideBar';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { ThemeColors } from '../styles/Colors';
-import { ImageBackground, ScrollView, AsyncStorage, Text, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { ImageBackground, ScrollView, AsyncStorage, Text, TouchableHighlight, TouchableOpacity, RefreshControl } from 'react-native';
 import Modal from 'react-native-modal';
 import DashboardStyles from '../styles/Dashboard';
 import { SVGGenerator } from '../lib/utils/SVGGenerator';
@@ -19,6 +19,7 @@ export interface StateProps {
 	isDrawerOpen: boolean;
 	badges: string[];
 	modalVisible: boolean;
+	contentMsg: string;
 }
 
 const qr = require('../../assets/qr.png');
@@ -46,7 +47,9 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 	state = {
 		badges: [],
 		isDrawerOpen: false,
-		modalVisible: false
+		modalVisible: false,
+		contentMsg: 'Loading your badges...',
+		refreshing: false
 	};
 
 	componentDidMount() {
@@ -62,14 +65,19 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 						return response.json();
 					})
 					.then(badgesRes => {
+						if(badgesRes.length === 0) {
+							this.setState({contentMsg: 'You currently do not have any badges'});
+						}
 						for (var i in badgesRes) {
 							const artDetail = this.decodeBadgeArtwork(badgesRes[i].artwork);
 							const imageStr = svgGen.generateImgStringForSDG(Number(artDetail[0]), Number(artDetail[1]));
 							badgeImages.push(imageStr);
 						}
-						this.setState({ badges: badgeImages });
+						this.setState({ badges: badgeImages, refreshing: false });
+
 					}).catch((error) => {
 						showToast('invalid ethereum address', toastType.DANGER);
+						this.setState({contentMsg: 'Your ethereum address is invalid'});
 					});
 				this.props.navigation.setParams({
 					// @ts-ignore
@@ -81,12 +89,17 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 		});
 	}
 
+	_onRefresh = () => {
+		this.setState({refreshing: true, contentMsg: 'Loading your badges...'});
+		this.getBadges();
+	  }
+
 	renderBadges = () => {
-		if (this.state.badges.length === 0) {
+		if (this.state.badges.length === 0 || this.state.refreshing === true) {
 			return (
-				<View style={{justifyContent: 'center', alignItems: 'center', width: '100%'}}>
+				<View style={[DashboardStyles.empty]}>
 					<Text style={{color: 'white'}}>
-						You currently do not have any badges. 
+						{this.state.contentMsg}
 					</Text>
 				</View>
 			);
@@ -143,7 +156,13 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 				onClose={() => this.closeDrawer()}
 			>
 				<ImageBackground source={background} style={[DashboardStyles.backgroundWrapper]}>
-					<ScrollView contentContainerStyle={[DashboardStyles.wrapper]}>
+					<ScrollView contentContainerStyle={[DashboardStyles.wrapper]} 
+					refreshControl={
+					<RefreshControl
+						refreshing={this.state.refreshing}
+						onRefresh={this._onRefresh}
+					/>
+					}>
 						{this.renderBadges()}
 					</ScrollView>
 					<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
