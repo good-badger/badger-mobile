@@ -55,6 +55,7 @@
 		"native-base": "^2.8.0",
 		"react": "16.3.1",
 		"react-native": "https://github.com/expo/react-native/archive/sdk-29.0.0.tar.gz",
+		"react-native-modal": "^6.5.0",
 		"react-native-svg": "^6.5.2",
 		"react-native-svg-uri": "^1.2.3",
 		"react-navigation": "^2.9.3"
