@@ -135,8 +135,8 @@ class Dashboard extends React.Component<ParentProps, StateProps> {
 							);
 						})}
 					</ScrollView>
+					<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
 				</ImageBackground>
-				<DarkButton propStyles={[DashboardStyles.button]} iconImage={qr} text="SCAN QR" onPress={() => this.props.navigation.navigate('ScanQR')} />
 				<View style={[DashboardStyles.modalContainer]}>
 					<Modal isVisible={this.state.modalVisible} style={[DashboardStyles.modalWrapper]}>
 						<View style={[DashboardStyles.modalContent]}>

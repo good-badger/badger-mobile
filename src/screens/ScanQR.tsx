@@ -77,7 +77,8 @@ export class ScanQR extends React.Component<ParentProps, State> {
 		if (payload.data.includes('callback')) {
 			var callback = payload.data.substring(0, payload.data.indexOf('?'));
 			fetch(callback + '?wallet=' + this.state.ethAddress + '&name=' + this.state.name);
-			console.log(callback + '?wallet=' + this.state.ethAddress + '&name=' + this.state.name);
+			showToast('Badge requested', toastType.SUCCESS);
+			this.navigateToDashboard();
 		} else if (!payload.data.includes('ethereum')) {
 			showToast('Only Ethereum addresses work', toastType.DANGER);
 		} else {
@@ -92,6 +93,13 @@ export class ScanQR extends React.Component<ParentProps, State> {
 	navigateToDetails = () => {
 		this.setState({ modalVisible: false });
 		this.props.navigation.navigate('CaptureDetails', {
+			ethAddress: this.state.payload
+		});
+	};
+
+	navigateToDashboard = () => {
+		this.setState({ modalVisible: false });
+		this.props.navigation.navigate('Dashboard', {
 			ethAddress: this.state.payload
 		});
 	};
@@ -129,9 +137,17 @@ export class ScanQR extends React.Component<ParentProps, State> {
 		if (hasCameraPermission === null) {
 			return <View />;
 		} else if (hasCameraPermission === false) {
-			return <View><Text>No access to camera</Text></View>;
+			return (
+				<View>
+					<Text>No access to camera</Text>
+				</View>
+			);
 		} else if (loading === true) {
-			return <View><Text>Loading...</Text></View>;
+			return (
+				<View>
+					<Text>Loading...</Text>
+				</View>
+			);
 		} else {
 			return (
 				<View style={{ flex: 1 }}>

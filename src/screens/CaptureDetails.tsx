@@ -1,6 +1,6 @@
 import { Container, Icon, Text, Toast, View } from 'native-base';
 import React from 'react';
-import { Dimensions, ImageBackground, KeyboardAvoidingView, StatusBar, AsyncStorage } from 'react-native';
+import { Dimensions, ImageBackground, KeyboardAvoidingView, StatusBar, AsyncStorage, TextInput } from 'react-native';
 import { NavigationActions, StackActions } from 'react-navigation';
 import DarkButton from '../components/DarkButton';
 import InputField from '../components/InputField';
@@ -84,9 +84,24 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 							<Text style={[CaptureDetailsStyles.header]}>Capture your details</Text>
 						</View>
 						<View style={CaptureDetailsStyles.divider} />
-						<InputField value={this.state.name} labelName="name" onChangeText={(text: string) => this.setState({ name: text })} />
-						<InputField value={this.state.email} labelName="email" onChangeText={(text: string) => this.setState({ email: text })} />
-						<InputField value={this.state.ethAddress} labelName="ethereum address" onChangeText={(text: string) => this.setState({ ethAddress: text })} />
+						<TextInput
+							value={this.state.name}
+							style={{ height: 40, color: 'white' }}
+							placeholder="name"
+							onChangeText={text => this.setState({ name: text })}
+						/>
+						<TextInput
+							value={this.state.email}
+							style={{ height: 40, color: 'white' }}
+							placeholder="email"
+							onChangeText={text => this.setState({ email: text })}
+						/>
+						<TextInput
+							value={this.state.ethAddress}
+							style={{ height: 40, color: 'white' }}
+							placeholder="ethAddress"
+							onChangeText={text => this.setState({ ethAddress: text })}
+						/>
 						<DarkButton propStyles={[CaptureDetailsStyles.button]} onPress={() => this.handleCreateUser()} text="GO!" />
 					</KeyboardAvoidingView>
 				</ImageBackground>
