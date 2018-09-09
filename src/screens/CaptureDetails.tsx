@@ -84,8 +84,7 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 			<Container>
 				<StatusBar barStyle="light-content" />
 				<ImageBackground source={background} style={[CaptureDetailsStyles.wrapper]}>
-					<View style={{ height: Dimensions.get('window').height * 0.1 }} />
-					return (
+				<View style={{ height: Dimensions.get('window').height * 0.1 }} />
 					<KeyboardAvoidingView behavior={'position'}>
 						<View style={[CaptureDetailsStyles.flexLeft]}>
 							<Text style={[CaptureDetailsStyles.header]}>Capture your details</Text>
@@ -96,7 +95,6 @@ export class CaptureDetails extends React.Component<ParentProps, StateTypes> {
 						<InputField value={this.state.ethAddress} labelName="ethereum address" onChangeText={(text: string) => this.setState({ ethAddress: text })} />
 						<DarkButton propStyles={[CaptureDetailsStyles.button]} onPress={() => this.handleCreateUser()} text="GO!" />
 					</KeyboardAvoidingView>
-					);
 				</ImageBackground>
 			</Container>
 		);
